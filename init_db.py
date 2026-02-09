@@ -28,18 +28,23 @@ class DBInitializer:
             );
         """)
 
-        genre_table_query = ("""
+        genre_table_query = """
             CREATE TABLE IF NOT EXISTS genre (
                 book_id CHAR(13),
                 genre TEXT NOT NULL,
                 PRIMARY KEY (book_id, genre),
                 FOREIGN KEY (book_id) REFERENCES books(isbn) ON DELETE CASCADE,
                 CONSTRAINT check_genre_enum CHECK (genre IN (
-                    'romance', 'fantasy', 'sci_fi', 'history', 'horror', 'distopian', 'biography', 'self_help',
-                    'memory', 'true_crime', 'poetry', 'graphic_novel', 'comedy'
+                    'academic', 'adult_fiction', 'adventure', 'art', 'autobiography', 'biography', 'business', 'childrens', 
+                    'christian', 'christian_fiction', 'classics', 'comedy', 'contemporary', 'crime', 'cultural', 'default', 'distopian',
+                    'erotica', 'fantasy', 'fiction', 'food_and_drink', 'graphic_novel', 'health', 'historical', 'historical_fiction', 'history', 'horror', 'humor',
+                    'manga_isekai', 'manga_josei', 'manga_seinen', 'manga_shojo', 'manga_shonen', 'memoir', 'music', 'mystery', 'new_adult', 'nonfiction', 'novels',
+                    'paranormal', 'parenting', 'philosophy', 'poetry', 'politics', 'psychology', 'religion', 'romance', 'science', 
+                    'science_fiction', 'self_help', 'sequential_art', 'short_stories', 'spirituality', 'sports_and_games', 'suspense',
+                    'thriller', 'travel', 'true_crime', 'womens_fiction', 'young_adult'
                 ))
             );
-        """)
+        """
 
         portfolio_table_query = ("""
             CREATE TABLE IF NOT EXISTS portfolio (

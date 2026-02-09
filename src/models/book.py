@@ -1,15 +1,24 @@
 from json import dumps
+from typing import Optional
 
 class Book:
-    # mapear de 1 pra 1 em dicionário
-    def __init__(self, isbn, title, release_year, author, summary=None, page_len=None, publisher=None):
+    def __init__(
+        self, 
+        isbn: str, 
+        title: str, 
+        release_year: int, 
+        author: str, 
+        page_len: int,
+        publisher: str,
+        summary: Optional[str] = None 
+    ):
         self.isbn = isbn
         self.title = title
         self.release_year = release_year
-        self.summary = summary
         self.author = author
         self.page_len = page_len
         self.publisher = publisher
+        self.summary = summary
 
     def to_dict(self):
         return {

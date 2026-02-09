@@ -28,7 +28,6 @@ def loan_book(loan_data: RentRequest):
         logging.error(f"[LOAN-API] Fail to create: {error} -> {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(error))
 
-
 @router.put('/loans/{loan_id}/return', status_code=status.HTTP_200_OK)
 def book_return(loan_id: str, return_data: ReturnRequest):
     try:

@@ -1,7 +1,17 @@
-from json import dumps
+from typing import Optional
+from datetime import datetime
+import json
 
 class User:
-    def __init__(self, id, name, email, created_at=None, inactive_at=None, active=True):
+    def __init__(
+        self,
+        name: str, 
+        email: str, 
+        id: Optional[str] = None,
+        created_at: Optional[datetime] = None, 
+        inactive_at: Optional[datetime] = None, 
+        active: bool = True
+    ):
         self.id = id
         self.name = name
         self.email = email
@@ -14,10 +24,10 @@ class User:
             "id": self.id,
             "name": self.name,
             "email": self.email,
-            "created_at": str(self.created_at) if self.created_at else None,
-            "inactive_at": str(self.inactive_at) if self.inactive_at else None,
+            "created_at": self.created_at if self.created_at else None,
+            "inactive_at": self.inactive_at if self.inactive_at else None,
             "active": self.active
         }
-    
+
     def to_json(self):
-        return dumps(self.to_dict())
+        return json.dumps(self.to_dict())

@@ -25,7 +25,20 @@ class GenreRepository:
         if result:
             for row in result:
                items_list.append(Genre(*row))
-        return items_list 
+        return items_list
+
+    def update_genre(self, book_id, new_genre):
+        try:
+            delete_query = "DELETE FROM genre WHERE book_id = ?"
+            self.db.execute_query(delete_query, (book_id,))
+
+            insert_query = "INSERT INTO genre (book_id, genre) VALUES (?, ?)"
+            params = (book_id, new_genre)
+            self.db.execute_query(insert_query, params)
+            
+        except Exception as error:
+            print(f"[GENRE-REPO] Fail to update/upsert: {error}")
+            raise error
 
     def delete_genre(self, book_id, genre_input):
         query = "DELETE FROM genre WHERE book_id = ? AND genre = ?"
