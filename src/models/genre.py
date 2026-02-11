@@ -1,8 +1,13 @@
 from json import dumps
 from src.models.enums import GenreEnum
+from typing import Union
 
 class Genre:
-    def __init__(self, book_id, genre: GenreEnum):
+    def __init__(
+        self, 
+        book_id: str, 
+        genre: Union[GenreEnum, str]
+    ):
         self.book_id = book_id
         self.genre = genre
     

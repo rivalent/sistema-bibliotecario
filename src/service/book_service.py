@@ -14,10 +14,10 @@ class BookService:
     def create(self, title: str, isbn: str, author: str, release_year: int, publisher: str, page_len: int, genre_enum: str, summary: str = None):
         try:
             title = title.strip()
-            isbn = isbn.strip()
+            isbn = isbn.replace(" ", "").replace("-", "").strip()
             author = author.strip()
             publisher = publisher.strip()
-            genre_enum = genre_enum.strip().lower()
+            genre_enum = genre_enum.replace(" ", "_").strip().lower()
             
             if summary:
                 summary = summary.strip()
@@ -56,7 +56,7 @@ class BookService:
 
     def find_by_isbn(self, isbn: str):
         try:
-            isbn = isbn.strip()
+            isbn = isbn.replace(" ", "").replace("-", "").strip()
             book = self.book_repo.get_book_by_id(isbn)
 
             if not book:
@@ -94,7 +94,7 @@ class BookService:
 
     def update(self, isbn: str, update_data: BookUpdate):
         try:
-            isbn = isbn.strip()
+            isbn = isbn.replace(" ", "").replace("-", "").strip()
             book = self.find_by_isbn(isbn)
 
             if not book:
@@ -136,7 +136,7 @@ class BookService:
 
     def delete(self, isbn: str):
         try:
-            isbn = isbn.strip()
+            isbn = isbn.replace(" ", "").replace("-", "").strip()
 
             if not self.find_by_isbn(isbn):
                 return False

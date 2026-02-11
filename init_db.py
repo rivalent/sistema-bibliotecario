@@ -38,7 +38,7 @@ class DBInitializer:
                     'academic', 'adult_fiction', 'adventure', 'art', 'autobiography', 'biography', 'business', 'childrens', 
                     'christian', 'christian_fiction', 'classics', 'comedy', 'contemporary', 'crime', 'cultural', 'default', 'distopian',
                     'erotica', 'fantasy', 'fiction', 'food_and_drink', 'graphic_novel', 'health', 'historical', 'historical_fiction', 'history', 'horror', 'humor',
-                    'manga_isekai', 'manga_josei', 'manga_seinen', 'manga_shojo', 'manga_shonen', 'memoir', 'music', 'mystery', 'new_adult', 'nonfiction', 'novels',
+                    'manga_isekai', 'manga_josei', 'manga_seinen', 'manga_shoujo', 'manga_shonen', 'memoir', 'music', 'mystery', 'new_adult', 'nonfiction', 'novels',
                     'paranormal', 'parenting', 'philosophy', 'poetry', 'politics', 'psychology', 'religion', 'romance', 'science', 
                     'science_fiction', 'self_help', 'sequential_art', 'short_stories', 'spirituality', 'sports_and_games', 'suspense',
                     'thriller', 'travel', 'true_crime', 'womens_fiction', 'young_adult'

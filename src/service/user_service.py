@@ -16,7 +16,7 @@ class UserService:
             created_at = datetime.datetime.now()
             
             name = name.strip()
-            email = email.strip().lower()
+            email = email.replace(" ", "").strip().lower()
 
             new_user = User(
                 id=user_id,
@@ -26,7 +26,6 @@ class UserService:
                 active=True,
                 inactive_at=None
             )
-
             self.repo.create_user(new_user)
 
             logging.debug(f"[USER-SERVICE] Created: {new_user.email} (ID: {user_id})")
@@ -47,7 +46,7 @@ class UserService:
 
     def find_by_id(self, user_id: str):
         try:
-            user_id = user_id.strip()
+            user_id = user_id.replace(" ", "").strip()
             user = self.repo.get_user_by_id(user_id)
             
             if not user:
@@ -63,7 +62,7 @@ class UserService:
     
     def activate(self, user_id: str):
         try:
-            user_id = user_id.strip()
+            user_id = user_id.replace(" ", "").strip()
             
             user = self.find_by_id(user_id)
             if not user:
@@ -81,7 +80,7 @@ class UserService:
 
     def update(self, user_id: str, update_data: UserRequest): 
         try:
-            user_id = user_id.strip()
+            user_id = user_id.replace(" ", "").strip()
             
             user = self.find_by_id(user_id)
             if not user:
@@ -92,7 +91,7 @@ class UserService:
                 user.name = update_data.name.strip()
                 
             if update_data.email is not None:
-                user.email = update_data.email.strip().lower()
+                user.email = update_data.email.replace(" ", "").strip().lower()
 
             self.repo.update_user(user)
 
@@ -105,7 +104,7 @@ class UserService:
 
     def delete(self, user_id: str):
         try:
-            user_id = user_id.strip()
+            user_id = user_id.replace(" ", "").strip()
             
             if not self.find_by_id(user_id):
                 return False

@@ -30,7 +30,7 @@ class GenreEnum(str, Enum):
     HORROR = "horror"
     HUMOR = "humor"
     MANGA_SHONEN = "manga_shonen"
-    MANGA_SHOJO = "manga_shojo"
+    MANGA_SHOUJO = "manga_shoujo"
     MANGA_SEINEN = "manga_seinen"
     MANGA_JOSEI = "manga_josei"
     MANGA_ISEKAI = "manga_isekai"

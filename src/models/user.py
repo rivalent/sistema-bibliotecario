@@ -19,6 +19,10 @@ class User:
         self.inactive_at = inactive_at
         self.active = active
     
+    @property
+    def is_active(self):
+        return self.inactive_at is None
+    
     def to_dict(self):
         return {
             "id": self.id,

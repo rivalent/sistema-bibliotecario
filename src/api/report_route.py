@@ -9,9 +9,9 @@ router = APIRouter()
 service = ReportService()
 
 @router.get('/reports/expired', status_code=status.HTTP_200_OK)
-def get_expired_loans():
+def get_expired_loans(user_id: Optional[str] = None):
     try:
-        report_data = service.get_expired_report()
+        report_data = service.get_expired_report(user_id=user_id)
         
         logging.debug(f"[REPORT-API] Found {len(report_data)} expired records")
         return report_data
@@ -35,9 +35,12 @@ def get_available_books(book_isbn: Optional[str] = None):
 
 
 @router.get('/reports/taken', status_code=status.HTTP_200_OK)
-def get_taken_books():
+def get_taken_books(book_isbn: Optional[str] = None, user_id: Optional[str] = None):
     try:
-        taken_items = service.get_taken_books_report()
+        taken_items = service.get_taken_books_report(
+            book_isbn=book_isbn, 
+            user_id=user_id
+        )
         
         logging.debug(f"[REPORT-API] Found {len(taken_items)} items currently taken")
         return taken_items

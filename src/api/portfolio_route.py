@@ -13,20 +13,23 @@ book_service = BookService()
 @router.post('/portfolio', status_code=status.HTTP_201_CREATED)
 def register_new_copy(portfolio_data: PortfolioCreate):
     try:
-        isbn_clean = portfolio_data.book_isbn.strip()
+        isbn_clean = portfolio_data.book_isbn
         existing_book = book_service.find_by_isbn(isbn_clean)
         
         if not existing_book:
             raise HTTPException(status_code=404, detail=f"Book with ISBN {isbn_clean} not found. Register the book first.")
 
         new_copy = portfolio_service.register_new_copy(
-            book_isbn = isbn_clean,
-            condition_enum = portfolio_data.condition_enum.strip().lower(),
-            cover_enum = portfolio_data.cover_enum.strip().lower()
+            book_isbn = portfolio_data.book_isbn,
+            condition_str = portfolio_data.condition_enum, 
+            cover_str = portfolio_data.cover_enum
         )
 
         if not new_copy:
-            raise HTTPException(status_code=400, detail="Failed to register copy (Check Enums)")
+            raise HTTPException(
+                status_code=400, 
+                detail="Failed to register. Check if: 1) ISBN is valid (13 digits), 2) Book exists, 3) Enums are correct."
+            )
         
         logging.debug(f"[PORTFOLIO-API] Created successfully: {new_copy.id}")
         return new_copy.to_dict()
@@ -39,13 +42,10 @@ def register_new_copy(portfolio_data: PortfolioCreate):
 @router.get('/portfolio/book/{book_isbn}', status_code=status.HTTP_200_OK)
 def list_copies_by_book(book_isbn: str):
     try:
-        isbn_clean = book_isbn.strip()
-        if len(isbn_clean) != 13:
-             raise HTTPException(status_code=400, detail="ISBN must be 13 characters")
 
-        copies = portfolio_service.list_copies_by_book(isbn_clean)
+        copies = portfolio_service.list_copies_by_book(book_isbn)
 
-        logging.debug(f"[PORTFOLIO-API] Found {len(copies)} copies for book {isbn_clean}")
+        logging.debug(f"[PORTFOLIO-API] Found {len(copies)} copies for book {book_isbn}")
         return [copy.to_dict() for copy in copies]
 
     except Exception as error:
@@ -57,8 +57,8 @@ def list_copies_by_book(book_isbn: str):
 def update_condition(portfolio_id: str, update_data: PortfolioUpdate):
     try:
         success = portfolio_service.update_state(
-            portfolio_id=portfolio_id.strip(), 
-            new_condition_enum=update_data.condition_enum.strip().lower()
+            portfolio_id=portfolio_id,
+            new_condition_str=update_data.condition_enum 
         )
 
         if not success:
